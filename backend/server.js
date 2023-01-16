@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(cors());
 
 //DB config
-
+//7Pb9ESc7gzwazGeM
 //api routes
 app.get("/", (req, res) => res.status(200).send("Hello world"));
 
