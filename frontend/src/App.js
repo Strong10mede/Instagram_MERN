@@ -3,7 +3,15 @@ import "./App.css";
 import Post from "./Post";
 import ImageUpload from "./ImageUpload";
 import { db, auth } from "./firebase";
-import { Button, Avatar, makeStyles, Modal, Input } from "@material-ui/core";
+import {
+  Button,
+  Box,
+  Typography,
+  Avatar,
+  makeStyles,
+  Modal,
+  Input,
+} from "@mui/material";
 import FlipMove from "react-flip-move";
 import InstagramEmbed from "react-instagram-embed";
 
@@ -92,8 +100,13 @@ function App() {
   };
   return (
     <div className="app">
-      <Modal open={open} onClose={() => setOpen(false)}>
-        <div style={modalStyle} className={classes.paper}>
+      <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={modalStyle} className={classes.paper}>
           <form className="app__login">
             <center>
               <img
@@ -117,11 +130,14 @@ function App() {
             />
             <Button onClick={handleLogin}>Login</Button>
           </form>
-        </div>
+        </Box>
+      </Modal>
+      <Modal open={open} onClose={() => setOpen(false)}>
+        <div style={modalStyle} className={classes.paper}></div>
       </Modal>
 
       <Modal open={registerOpen} onClose={() => setRegisterOpen(false)}>
-        <div style={modalStyle} className={classes.paper}>
+        <Box style={modalStyle} className={classes.paper}>
           <form className="app__login">
             <center>
               <img
@@ -150,7 +166,7 @@ function App() {
             />
             <Button onClick={handleRegister}>Register</Button>
           </form>
-        </div>
+        </Box>
       </Modal>
       <div className="app__header">
         <img
