@@ -54,9 +54,9 @@ function App() {
       unsubscribe();
     };
   }, [user, username]);
-  const fetchData = async () => {
-    await axios.get("/sync").then((response) => {
-      console.log(response.data());
+  const fetchData = () => {
+    axios.get("/sync").then((response) => {
+      console.log(response);
       setPosts(response.data);
     });
   };
