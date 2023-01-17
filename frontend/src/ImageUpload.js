@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import firebase from "firebase";
-import { storage, db } from "./firebase";
+// import { storage, db } from "./firebase";
 import "./ImageUpload.css";
 import { Input, Button } from "@mui/material";
+import axios from "./axios";
 
 const ImageUpload = ({ username }) => {
   const [image, setImage] = useState(null);
@@ -39,6 +40,12 @@ const ImageUpload = ({ username }) => {
           .getDownloadURL()
           .then((url) => {
             setUrl(url);
+
+            axios.post("/upload", {
+              caption: caption,
+              user: username,
+              image: url,
+            });
 
             // post image inside db
             db.collection("posts").add({
