@@ -8,6 +8,32 @@ import dbModel from "./dbModel.js";
 const app = express();
 const port = process.env.PORT || 9000;
 
+// const pusher = new Pusher({
+//   appId: "1539419",
+//   key: "a3c2e3905e70ecd5f15a",
+//   secret: "9c58963a1d81d9654b9b",
+//   cluster: "ap2",
+//   useTLS: true,
+// });
+
+mongoose.connection.once("open", () => {
+  console.log("DB connected");
+  //   const changeStream = mongoose.connection.collection("posts").watch();
+  //   changeStream.on("change", (change) => {
+  //     console.log(change);
+  //     if (change.operationType === "insert") {
+  //       const postDetails = change.fullDocument;
+  //       pusher.trigger("posts", "inserted", {
+  //         user: postDetails.user,
+  //         caption: postDetails.caption,
+  //         image: postDetails.image,
+  //       });
+  //     } else {
+  //       console.log("Error triggering Pusher");
+  //     }
+  //   });
+});
+
 //middlewares
 app.use(express.json());
 app.use(cors());
@@ -21,12 +47,11 @@ mongoose.connect(connection_url, {
   useUnifiedTopology: true,
 });
 
-mongoose.connection.once("open", () => console.log("DB connected"));
-
 //api routes
+app.get("/", (req, res) => res.status(200).send("Hello world"));
 app.post("/upload", (req, res) => {
-  const dbPost = res.body;
-
+  const dbPost = req.body;
+  console.log(dbPost);
   dbModel.create(dbPost, (err, data) => {
     if (err) {
       res.status(500).send(err);
@@ -44,7 +69,6 @@ app.get("/sync", (req, res) => {
     }
   });
 });
-app.get("/", (req, res) => res.status(200).send("Hello world"));
 
 //listen
 app.listen(port, () => console.log(`Listening on localhost: ${port}`));
