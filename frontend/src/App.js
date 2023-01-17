@@ -65,7 +65,7 @@ function App() {
       cluster: "ap2",
     });
 
-    const channel = pusher.subscribe("posts");
+    const channel = pusher.subscribe("postez");
     channel.bind("inserted", function (data) {
       alert(JSON.stringify(data));
 

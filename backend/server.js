@@ -23,7 +23,7 @@ mongoose.connection.once("open", () => {
     console.log(change);
     if (change.operationType === "insert") {
       const postDetails = change.fullDocument;
-      pusher.trigger("posts", "inserted", {
+      pusher.trigger("postez", "inserted", {
         user: postDetails.user,
         caption: postDetails.caption,
         image: postDetails.image,
