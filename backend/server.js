@@ -8,30 +8,30 @@ import dbModel from "./dbModel.js";
 const app = express();
 const port = process.env.PORT || 9000;
 
-// const pusher = new Pusher({
-//   appId: "1539419",
-//   key: "a3c2e3905e70ecd5f15a",
-//   secret: "9c58963a1d81d9654b9b",
-//   cluster: "ap2",
-//   useTLS: true,
-// });
+const pusher = new Pusher({
+  appId: "1539419",
+  key: "a3c2e3905e70ecd5f15a",
+  secret: "9c58963a1d81d9654b9b",
+  cluster: "ap2",
+  useTLS: true,
+});
 
 mongoose.connection.once("open", () => {
   console.log("DB connected");
-  //   const changeStream = mongoose.connection.collection("posts").watch();
-  //   changeStream.on("change", (change) => {
-  //     console.log(change);
-  //     if (change.operationType === "insert") {
-  //       const postDetails = change.fullDocument;
-  //       pusher.trigger("posts", "inserted", {
-  //         user: postDetails.user,
-  //         caption: postDetails.caption,
-  //         image: postDetails.image,
-  //       });
-  //     } else {
-  //       console.log("Error triggering Pusher");
-  //     }
-  //   });
+  const changeStream = mongoose.connection.collection("posts").watch();
+  changeStream.on("change", (change) => {
+    console.log(change);
+    if (change.operationType === "insert") {
+      const postDetails = change.fullDocument;
+      pusher.trigger("posts", "inserted", {
+        user: postDetails.user,
+        caption: postDetails.caption,
+        image: postDetails.image,
+      });
+    } else {
+      console.log("Error triggering Pusher");
+    }
+  });
 });
 
 //middlewares
