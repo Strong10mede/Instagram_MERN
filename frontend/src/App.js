@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import Post from "./Post";
 import ImageUpload from "./ImageUpload";
-import { db, auth } from "./firebase";
+// import { db, auth } from "./firebase";
 import {
   Button,
   Box,
@@ -49,37 +49,37 @@ function App() {
   const [open, setOpen] = useState(false);
   const [registerOpen, setRegisterOpen] = useState(false);
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((authUser) => {
-      if (authUser) {
-        // user is logged in...
-        console.log(authUser);
-        setUser(authUser);
+  // useEffect(() => {
+  //   const unsubscribe = auth.onAuthStateChanged((authUser) => {
+  //     if (authUser) {
+  //       // user is logged in...
+  //       console.log(authUser);
+  //       setUser(authUser);
 
-        if (authUser.displayName) {
-          // dont update username
-        } else {
-          return authUser.updateProfile({
-            displayName: username,
-          });
-        }
-      } else {
-        setUser(null);
-      }
-    });
+  //       if (authUser.displayName) {
+  //         // dont update username
+  //       } else {
+  //         return authUser.updateProfile({
+  //           displayName: username,
+  //         });
+  //       }
+  //     } else {
+  //       setUser(null);
+  //     }
+  //   });
 
-    return () => {
-      unsubscribe();
-    };
-  }, [user, username]);
+  //   return () => {
+  //     unsubscribe();
+  //   };
+  // }, [user, username]);
 
-  useEffect(() => {
-    db.collection("posts")
-      .orderBy("timestamp", "desc")
-      .onSnapshot((snapshot) =>
-        setPosts(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })))
-      );
-  }, []);
+  // useEffect(() => {
+  //   db.collection("posts")
+  //     .orderBy("timestamp", "desc")
+  //     .onSnapshot((snapshot) =>
+  //       setPosts(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })))
+  //     );
+  // }, []);
 
   const handleLogin = (e) => {
     e.preventDefault();

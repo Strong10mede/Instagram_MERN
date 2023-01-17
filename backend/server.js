@@ -1,5 +1,6 @@
 import cors from "cors";
 import express from "express";
+import mongoose from "mongoose";
 import mongoos from "mongoose";
 import Pusher from "pusher";
 
@@ -12,7 +13,17 @@ app.use(express.json());
 app.use(cors());
 
 //DB config
-//7Pb9ESc7gzwazGeM
+
+const connection_url =
+  "mongodb+srv://admin:7Pb9ESc7gzwazGeM@cluster0.vhx0qi4.mongodb.net/instaDB?retryWrites=true&w=majority";
+
+mongoose.connect(connection_url, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+mongoose.connection.once("open", () => console.log("DB connected"));
+
 //api routes
 app.get("/", (req, res) => res.status(200).send("Hello world"));
 
